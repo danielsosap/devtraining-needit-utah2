@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function($scope, $interval, spUtil) {
+  var c = this;
+
+  // Función para actualizar los datos en tiempo real
+  function updateData() {
+    spUtil.get('get_real_time_data').then(function(response) {
+      c.data.items = response.data;
+    });
+  }
+
+  // Actualizar cada 5 segundos (ajusta el tiempo según tus necesidades)
+  $interval(updateData, 5000);
+
+  // Cargar datos iniciales
+  updateData();
+};
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id/>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>PruebaWidget</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function() {
+    data.items = [];
+
+    // Simulación de datos que podrían provenir de una tabla
+    var gr = new GlideRecord('x_58872_needit_needit');
+    gr.query();
+    while (gr.next()) {
+        data.items.push({
+            name: gr.getValue('number'),
+            value: gr.getValue('priority')
+        });
+    }
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-08-08 18:42:00</sys_created_on>
+        <sys_id>309a181383330a1026cc5855eeaad3a4</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>PruebaWidget</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sp_widget_309a181383330a1026cc5855eeaad3a4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-08-08 19:08:06</sys_updated_on>
+        <template><![CDATA[<div>
+    <h2>Datos en Tiempo Real</h2>
+    <div ng-repeat="item in c.data.items">
+        {{item.name}}: {{item.value}}
+    </div>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>
